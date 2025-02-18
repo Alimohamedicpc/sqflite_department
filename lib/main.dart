@@ -1,6 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:sqflite/sqflite.dart' as sqfLiteDataBase;
+import 'package:sqflite/sqlite_api.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  String DatabasesPath = await sqfLiteDataBase.getDatabasesPath();
+  print(DatabasesPath);
+  String myDbName = "test.db";
+  String myDbPath = "$DatabasesPath/$myDbName";
+  int versionDb = 1;
+  sqfLiteDataBase.openDatabase(
+    myDbPath,
+    version: versionDb,
+    onCreate: (Database db, int version) {
+      print(db);
+      print(version);
+    },
+  );
   runApp(const MyApp());
 }
 
